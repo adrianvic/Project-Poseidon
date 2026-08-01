@@ -76,4 +76,16 @@ public class ConsoleLogManager {
             a.log(Level.WARNING, "Failed to log to server.log", exception);
         }
     }
+
+    // Project Poseidon Embedded start
+    public static void cleanup() {
+        for (Handler h : a.getHandlers()) {
+            a.removeHandler(h);
+        }
+        Logger root = Logger.getLogger("");
+        for (Handler h : root.getHandlers()) {
+            root.removeHandler(h);
+        }
+    }
+    // Project Poseidon Embedded end
 }

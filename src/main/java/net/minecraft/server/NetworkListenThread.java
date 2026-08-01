@@ -83,6 +83,20 @@ public class NetworkListenThread {
         }
     }
 
+    // Project Poseidon Embedded start
+    public void stop() {
+        this.b = false;
+
+        try {
+            if (d != null) {
+                this.d.close();
+            }
+        } catch (IOException ex) {
+            a.log(Level.FINE, "Exception closing server socket", ex);
+        }
+    }
+    // Project Poseidon Embedded end
+
     static ServerSocket a(NetworkListenThread networklistenthread) {
         return networklistenthread.d;
     }

@@ -31,5 +31,9 @@ public final class Poseidon {
         Poseidon.server = server;
     }
 
+    public static void _resetServer() {
+        Poseidon.server = null;
+    }
+
 
 }

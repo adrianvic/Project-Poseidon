@@ -74,6 +74,12 @@ public class MinecraftServer implements Runnable, ICommandListener {
 //    private PoseidonVersionChecker poseidonVersionChecker;
     //Poseidon End
 
+    // Project Poseidon Embedded start
+    public boolean exitOnStop = true;
+    private static final java.io.PrintStream out = System.out;
+    private static final java.io.PrintStream err = System.err;
+    // Project Poseidon Embedded end
+
     public MinecraftServer(OptionSet options) { // CraftBukkit - adds argument OptionSet
         new ThreadSleepForever(this);
 
@@ -361,7 +367,9 @@ public class MinecraftServer implements Runnable, ICommandListener {
         //Project Poseidon Start
 
         // This is done before disablePlugins() to ensure the watchdog doesn't detect plugins disabling as a server hang
-        Poseidon.getServer().shutdownServer();
+        if (Poseidon.getServer() != null) {
+            Poseidon.getServer().shutdownServer();
+        }
 
         //Project Poseidon End
 
@@ -450,6 +458,16 @@ public class MinecraftServer implements Runnable, ICommandListener {
             }
         }
         // Poseidon End
+
+        // Project Poseidon Embedded start
+        this.networkListenThread.stop();
+        ConsoleLogManager.cleanup();
+        org.bukkit.Bukkit._resetServer();
+        com.legacyminecraft.poseidon.Poseidon._resetServer();
+        System.setOut(out);
+        System.setErr(err);
+        // Project Poseidon Embedded end
+        // Project Poseidon Embedded end
     }
 
     public void a() {
@@ -524,7 +542,9 @@ public class MinecraftServer implements Runnable, ICommandListener {
             } catch (Throwable throwable1) {
                 throwable1.printStackTrace();
             } finally {
-                System.exit(0);
+                if (exitOnStop) {
+                    System.exit(0);
+                }
             }
         }
     }

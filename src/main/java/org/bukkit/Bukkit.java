@@ -54,6 +54,10 @@ public final class Bukkit {
         server.getLogger().info("This server is running " + getName() + " version " + getVersion() + " - A fork of CB1060-1092");
     }
 
+    public static void _resetServer() {
+        Bukkit.server = null;
+    }
+
     public static String getName() {
         return server.getName();
     }
