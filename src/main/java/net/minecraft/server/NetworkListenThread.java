@@ -95,6 +95,10 @@ public class NetworkListenThread {
             a.log(Level.FINE, "Exception closing server socket", ex);
         }
     }
+
+    public int getPort() {
+        return d.getLocalPort();
+    }
     // Project Poseidon Embedded end
 
     static ServerSocket a(NetworkListenThread networklistenthread) {
