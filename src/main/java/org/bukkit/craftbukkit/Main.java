@@ -33,6 +33,11 @@ public class Main {
                         .defaultsTo(new File("plugins"))
                         .describedAs("Plugin directory");
 
+                acceptsAll(asList("r", "resources", "plugin-data"), "Plugin data folders directory")
+                        .withRequiredArg()
+                        .ofType(String.class)
+                        .describedAs("Plugin data folder");
+
                 acceptsAll(asList("h", "host", "server-ip"), "Host to listen on")
                         .withRequiredArg()
                         .ofType(String.class)

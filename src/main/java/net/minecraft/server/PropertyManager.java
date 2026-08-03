@@ -39,7 +39,13 @@ public class PropertyManager {
 
     private <T> T getOverride(String name, T value) {
         if ((this.options != null) && (this.options.has(name))) {
-            return (T) this.options.valueOf(name);
+            // Project Poseidon Embedded start
+            Object result = this.options.valueOf(name);
+            if (value instanceof String && result != null && !(result instanceof String)) {
+                return (T) String.valueOf(result);
+            }
+            return (T) result;
+            // Project Poseidon Embedded end
         }
 
         return value;

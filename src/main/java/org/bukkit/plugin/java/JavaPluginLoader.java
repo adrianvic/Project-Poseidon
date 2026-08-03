@@ -1,7 +1,9 @@
 package org.bukkit.plugin.java;
 
 import com.legacyminecraft.poseidon.event.PoseidonCustomListener;
+import net.minecraft.server.PropertyManager;
 import org.bukkit.Server;
+import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.event.CustomEventListener;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -95,7 +97,13 @@ public class JavaPluginLoader implements PluginLoader
             throw new InvalidPluginException(ex);
         }
 
-        File dataFolder = new File(file.getParentFile(), description.getName());
+        // Project Poseidon Embedded start
+        PropertyManager pm = ((CraftServer) this.server).getServer().propertyManager;
+        String defaultPluginFolder = pm.getString("plugins", "plugins");
+        String pluginsDataFolderName = pm.getString("plugin-data", defaultPluginFolder);
+        File pluginsDataFolder = new File(new File("."), pluginsDataFolderName);
+        // Project Poseidon Embedded end
+        File dataFolder = new File(pluginsDataFolder, description.getName()); // PE - changed to use custom folder
         File oldDataFolder = getDataFolder(file);
 
         // Found old data folder
